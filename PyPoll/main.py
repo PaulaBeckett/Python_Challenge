@@ -9,6 +9,8 @@ election_file_csv = os.path.join("Resources", "election_data.csv")
 total_votes = 0
 list_candidates = []
 vote_candidate = [0,0,0]
+#create variable hold percentage of votes
+percent_vote = []
 
 #open and read csv
 with open(election_file_csv, "r") as election_csv:
@@ -40,8 +42,24 @@ with open(election_file_csv, "r") as election_csv:
             vote_index = list_candidates.index(vote_choice)
             #add a vote to the vote counter list
             vote_candidate[vote_index] +=1
+    
+    #run a loop to update the percentage of votes based on final tallies and total votes
+    for candidate in range(3):
+        #calc percentage of votes to 3 decimal places
+        percent = round(((vote_candidate[candidate])/total_votes)*100,3)
+        #add to percentage list
+        percent_vote.append(percent)
 
-#test print proper collection of candidates, total votes and number of votes per candidate
+#print and test print proper collection of candidates, total votes and number of votes per candidate
 print(total_votes)
-print(list_candidates)
-print(vote_candidate)
+#print(list_candidates)
+#print(vote_candidate)
+
+#find largest number of votes from tallies
+most_votes = max(vote_candidate)
+#test print(most_votes)
+
+#using max result find index of this in table
+winner_index = vote_candidate.index(max(vote_candidate))
+winner = list_candidates[winner_index]
+#test print(winner)
