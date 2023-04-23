@@ -2,7 +2,7 @@
 import os
 import csv
 
-#create variable to hold csv file
+#create variable to hold csv file path
 bank_file_csv = os.path.join("Resources","budget_data.csv")
 
 #create variables to hold information
@@ -48,33 +48,53 @@ with open(bank_file_csv, "r") as bank_csv:
         #test for correct population of monthly variance list
         #print(monthly_variance)
 
-    #print results for total months/p&l
-    print(f'Total Months: {total_months}')
-    print(f'Total: ${total_pl}')
+#print results for total months/p&l
+print(f'Total Months: {total_months}')
+print(f'Total: ${total_pl}')
 
-    #calculate the average variance to 2 decimal places and print
-    average_variance = round(sum(monthly_variance)/len(monthly_variance),2)
-    print(f'Average Change: ${average_variance}')
+#calculate the average variance to 2 decimal places and print
+average_variance = round(sum(monthly_variance)/len(monthly_variance),2)
+print(f'Average Change: ${average_variance}')
 
-    #calc and store max increase
-    greatest_increase = max(monthly_variance)
-    #to find relative month. Add 1 as monthly variance list did not include the first row of data
-    max_inc = monthly_variance.index(max(monthly_variance)) + 1
-    #test print for correct list index
-    #print(max_inc)
-    #date of max increase  
-    inc_date = date[max_inc]
-    #test print for correct date returned
-    #print(inc_date)
+#calc and store max increase
+greatest_increase = max(monthly_variance)
+#to find relative month. Add 1 as monthly variance list did not include the first row of data
+max_inc = monthly_variance.index(max(monthly_variance)) + 1
+#test print for correct list index
+#print(max_inc)
+#date of max increase  
+inc_date = date[max_inc]
+#test print for correct date returned
+#print(inc_date)
 
-    #repeat above calc for biggest decrease
-    greatest_decrease = min(monthly_variance)
-    max_dec = monthly_variance.index(min(monthly_variance)) + 1
-    #test print(max_dec)
-    dec_date = date[max_dec]
-    #test print(dec_date)
+#repeat above calc for biggest decrease
+greatest_decrease = min(monthly_variance)
+max_dec = monthly_variance.index(min(monthly_variance)) + 1
+#test print(max_dec)
+dec_date = date[max_dec]
+#test print(dec_date)
 
-    #display min/max profits
-    print(f'Greatest Increase in Profits: {inc_date} (${greatest_increase})')
-    print(f'Greatest Decrease in Profits: {dec_date} (${greatest_decrease})')
-        
+#display min/max profits
+print(f'Greatest Increase in Profits: {inc_date} (${greatest_increase})')
+print(f'Greatest Decrease in Profits: {dec_date} (${greatest_decrease})')
+
+#write results to a new text file
+
+#variable for new text file path
+bank_results = os.path.join("Analysis", "Financial_Analysis.txt")
+
+#open new file
+with open(bank_results,"wt") as txt:
+#define what each line should say, in a list
+    lines = ["Financial Analysis",
+            "---------------------------------------------",
+            (f'Total Months: {total_months}'),
+            (f'Total: ${total_pl}'),
+            (f'Average Change: ${average_variance}'),
+            (f'Greatest Increase in Profits: {inc_date} (${greatest_increase})'),
+            (f'Greatest Decrease in Profits: {dec_date} (${greatest_decrease})')]
+    #loop to write each value in the text file on it's own line
+    for line in lines:
+        txt.write(line)
+        txt.write('\n')
+
