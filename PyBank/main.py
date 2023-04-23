@@ -11,6 +11,8 @@ previous_row = 0
 #add counters to collect total from each column
 total_months = 0
 total_pl = 0
+#add variable to store date
+date = []
 
 #open and read csv
 with open(bank_file_csv, "r") as bank_csv:
@@ -29,6 +31,8 @@ with open(bank_file_csv, "r") as bank_csv:
             #add values from first row to counters
             total_months = total_months + 1
             total_pl = total_pl + int(row[1])
+            #add row date to list
+            date.append(str(row[0]))
 
         #all other rows have calc applied and stored in list
         else:
@@ -38,6 +42,8 @@ with open(bank_file_csv, "r") as bank_csv:
             #add values to counters
             total_months = total_months + 1
             total_pl = total_pl + int(row[1])
+            #add row date to list
+            date.append(str(row[0]))
 
         #test for correct population of monthly variance list
         #print(monthly_variance)
@@ -45,7 +51,30 @@ with open(bank_file_csv, "r") as bank_csv:
     #print results for total months/p&l
     print(f'Total Months: {total_months}')
     print(f'Total: ${total_pl}')
+
     #calculate the average variance to 2 decimal places and print
     average_variance = round(sum(monthly_variance)/len(monthly_variance),2)
     print(f'Average Change: ${average_variance}')
+
+    #calc and store max increase
+    greatest_increase = max(monthly_variance)
+    #to find relative month. Add 1 as monthly variance list did not include the first row of data
+    max_inc = monthly_variance.index(max(monthly_variance)) + 1
+    #test print for correct list index
+    #print(max_inc)
+    #date of max increase  
+    inc_date = date[max_inc]
+    #test print for correct date returned
+    #print(inc_date)
+
+    #repeat above calc for biggest decrease
+    greatest_decrease = min(monthly_variance)
+    max_dec = monthly_variance.index(min(monthly_variance)) + 1
+    #test print(max_dec)
+    dec_date = date[max_dec]
+    #test print(dec_date)
+
+    #display min/max profits
+    print(f'Greatest Increase in Profits: {inc_date} (${greatest_increase})')
+    print(f'Greatest Decrease in Profits: {dec_date} (${greatest_decrease})')
         
